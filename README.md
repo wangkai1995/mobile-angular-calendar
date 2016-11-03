@@ -68,7 +68,7 @@
 	};
   ```
   
-  ##配置参数
+##配置参数
   ```javascript
   calendar.confg = {
     default:            `//初始化默认时间 (Date()类型, 默认当天)`
@@ -82,7 +82,7 @@
     }
  ```
  
- ##回调
+##回调
  ```javascript
  calendar.callback = {
    //初始化回调
@@ -101,10 +101,10 @@
  ```
  
  
- ##calendar实例方法
+##calendar实例方法
  ```javascript
  calendar.method.show();       `//显示控件`
  calendar.method.hide();       `//隐藏控件`
- calendar.method.setDate(date,outflag);    `//手动设置日期 (date = 设置的日期 outflag = 是否输出到对应绑定的ng-module中)`
- calendar.method.resetConfg(confg);        ·//重置配置 confg参数为上面配置对象calendar.confg一致`
- 
+ calendar.method.setDate(date,outflag);    `//手动设置日期 (date = 设置的日期(Date) ;outflag = 是否输出到对应绑定的ng-module中(boolean))`
+ calendar.method.resetConfg(confg);        `//重置配置 confg参数为上面配置对象calendar.confg一致`
+```
