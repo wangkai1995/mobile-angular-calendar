@@ -1,0 +1,56 @@
+
+<div id="calendar-share-warp">
+	<!--遮罩层-->
+	<div  class="calendar-share-container" 
+		  ng-class="{'calendar-container-active':template.templateShow}"
+	>
+		 <!--内容层-->
+		 <div class="calendar-container">
+			<!--头部-->
+			<div class="calendar-head">
+				<div class="calendar-head-item">
+				 	<span ng-click="template.reduceYear(1)">&lt;&nbsp;</span>
+				 	<span class="green">{{template.year}}</span>
+				 	<span ng-click="template.addYear(1)">&nbsp;&gt;</span>
+				 </div>
+				<div class="calendar-head-item">
+					<span ng-click="template.reduceMonth(1)">&lt;&nbsp;</span>
+				 	<span class="green">{{template.month}}</span>
+				 	<span ng-click="template.addMonth(1)">&nbsp;&gt;</span>
+				</div>		
+			</div> 		
+		
+			<!--内容-->
+			<div class="calendar-content">
+				<div class="week-content">
+					<span>一</span>
+					<span>二</span>
+					<span>三</span>
+					<span>四</span>
+					<span>五</span>
+					<span>六</span>
+					<span>日</span>
+				</div>
+				<div class="date-content">
+					<span ng-repeat="(key, value) in template.date" 
+						  ng-class="{'grey':value.monthFlag !== 'now' && value.active
+						  , 'active':value.date === template.check && value.active
+						  , 'overdue': !value.active}"
+					      ng-click="template.checkDate(value)"
+					>
+						{{value.value}}
+					</span>
+				</div>
+			</div>
+			
+			
+			<!--底部-->
+			<div class="calendar-footer">
+				<div class="footer-button" ng-click="template.hide()"><span>取消</span></div>
+				<div class="footer-button" ng-click="template.determine()"><span>确定</span></div>
+			</div>
+		 </div>
+
+	</div>
+
+</div>

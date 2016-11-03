@@ -1,0 +1,36 @@
+<div class="warp">
+	<div class="heads">
+		<ul>
+			<li>推荐</li>
+			<li>电器</li>
+			<li>零食</li>
+			<li>游戏</li>
+		</ul>
+	</div>
+
+	<div class="content">
+		  <!-- <img src="http://pic.guijj.com/c/227_6.jpg" alt=""> -->
+		  <img src="./logo.jpg" alt="君子剑">
+		  <div class="from">
+		  		<div class="time">
+		  			<p>请输入出发日期&nbsp;:&nbsp;</p>
+		  		</div>
+		  		<input type="text" ng-model="form" calendar='fromConfg'/>
+		  </div>
+
+		  <div class="from">
+		  		<div class="time">
+		  			<p>请输入返回日期&nbsp;:&nbsp;</p>
+		  		</div>
+		  		<input type="text" ng-model="to" calendar='toConfg'/>
+		  </div>
+	</div>
+
+	<div class="footer">
+		<ul>
+			<li ng-click="testClick()">首页</li>
+			<li>订单</li>
+			<li>我的</li>
+		</ul>
+	</div>
+</div>
