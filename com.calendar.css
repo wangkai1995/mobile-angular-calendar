@@ -1,0 +1,91 @@
+#calendar-share-warp {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px; }
+  #calendar-share-warp .calendar-share-container {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    height: 0px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: all .1s linear;
+    -moz-transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    -o-transition: all .1s linear; }
+    #calendar-share-warp .calendar-share-container.calendar-container-active {
+      height: 100%; }
+    #calendar-share-warp .calendar-share-container .calendar-container {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      height: 65%;
+      background-color: #fff;
+      text-align: center; }
+      #calendar-share-warp .calendar-share-container .calendar-container .calendar-head {
+        width: 100%;
+        height: 20%;
+        border-bottom: 1px solid #808080; }
+        #calendar-share-warp .calendar-share-container .calendar-container .calendar-head .calendar-head-item {
+          width: 50%;
+          float: left;
+          height: 100%; }
+          #calendar-share-warp .calendar-share-container .calendar-container .calendar-head .calendar-head-item span {
+            position: relative;
+            top: 30%;
+            font-size: 1.5rem; }
+            #calendar-share-warp .calendar-share-container .calendar-container .calendar-head .calendar-head-item span.green {
+              color: #009900; }
+      #calendar-share-warp .calendar-share-container .calendar-container .calendar-content {
+        width: 100%;
+        height: 60%;
+        padding: 5px; }
+        #calendar-share-warp .calendar-share-container .calendar-container .calendar-content .week-content {
+          width: 100%;
+          height: 10%; }
+          #calendar-share-warp .calendar-share-container .calendar-container .calendar-content .week-content span {
+            float: left;
+            width: 14%;
+            position: relative;
+            top: 5px; }
+        #calendar-share-warp .calendar-share-container .calendar-container .calendar-content .date-content {
+          width: 100%;
+          height: 85%;
+          padding-top: 8%; }
+          #calendar-share-warp .calendar-share-container .calendar-container .calendar-content .date-content span {
+            float: left;
+            width: 14%;
+            height: 25px; }
+            #calendar-share-warp .calendar-share-container .calendar-container .calendar-content .date-content span.grey {
+              color: #909090; }
+            #calendar-share-warp .calendar-share-container .calendar-container .calendar-content .date-content span.active {
+              background-color: #3366FF;
+              color: #fff; }
+            #calendar-share-warp .calendar-share-container .calendar-container .calendar-content .date-content span.overdue {
+              color: #e0e0e0; }
+      #calendar-share-warp .calendar-share-container .calendar-container .calendar-footer {
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        height: 10%;
+        border-top: 1px solid #808080; }
+        #calendar-share-warp .calendar-share-container .calendar-container .calendar-footer .footer-button {
+          width: 50%;
+          float: left;
+          text-align: center;
+          position: relative;
+          height: 100%; }
+          #calendar-share-warp .calendar-share-container .calendar-container .calendar-footer .footer-button span {
+            position: relative;
+            top: 4px;
+            color: #009900;
+            font-size: 1.25rem; }
+
+.user-select-off {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none; }
