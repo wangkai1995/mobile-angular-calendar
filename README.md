@@ -31,7 +31,7 @@
 	$scope.fromConfg = {
 		default : new Date(),
 		outFormat : 'yyyy年MM月dd日',
-		maxDate: new Date(2016,10,5),    `请注意月份是0-11算起`
+		maxDate: new Date(2017,2,5),    `请注意月份是0-11算起`
 		minDate: new Date(2016,9,10),
 
 		// template: 'lib/calendar/test_index.html',  
@@ -53,7 +53,7 @@
 	$scope.toConfg = {
 		default : new Date(2016,7,2),
 		outFormat : 'MM月dd日',
-		maxDate: new Date(2016,11,5),
+		maxDate: new Date(2017,3,5),
 		minDate: new Date(2016,4,10),
 
 		onBackObj: function(obj){
