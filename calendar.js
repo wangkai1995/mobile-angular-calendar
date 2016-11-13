@@ -103,7 +103,7 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
             };
             var numberOrWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 
-            
+             
             //实例化插件对象
             var calendar = {};
             calendar[module] = {};
