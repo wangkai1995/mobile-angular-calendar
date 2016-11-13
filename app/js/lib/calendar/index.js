@@ -1,3 +1,3 @@
- angular.module('wk-calendar', []) 
+ angular.module('mobile-calendar', []) 
  	.directive('calendar',require('./directive/index.js'));
  	

@@ -6,16 +6,18 @@ module.exports = [ '$scope', '$state', function( $scope, $state){
 
 	$scope.calendar = '';
 
-	//控件参数配置
+	//控件参数配置  请注意月份是0-11算起
 	$scope.fromConfg = {
 		default : new Date(),
 		outFormat : 'yyyy年MM月dd日',
-		maxDate: new Date(2016,10,5),
+		maxDate: new Date(2016,10,5), 
 		minDate: new Date(2016,9,10),
+
+		// template: 'lib/calendar/test_index.html',
 
 		onBackObj: function(obj){
 			console.log(obj);
-			$scope.calendar = obj;
+			$scope.fromCalendar = obj;
 		},
 		onChangeDate:function(date){
 			console.log(date);
@@ -30,6 +32,7 @@ module.exports = [ '$scope', '$state', function( $scope, $state){
 
 		onBackObj: function(obj){
 			console.log(obj);
+			$scope.toCalendar = obj;
 		},
 		onChangeDate:function(date){
 			console.log(date);
@@ -38,14 +41,22 @@ module.exports = [ '$scope', '$state', function( $scope, $state){
 
 
 
-	$scope.testClick = function(){
-		$scope.calendar.setDate(new Date(2016,9,15) , true);
-		$scope.calendar.resetConfg({
+	$scope.fromClick = function(){
+		$scope.fromCalendar.setDate(new Date(2016,9,15) , true);
+		$scope.fromCalendar.resetConfg({
 			maxDate: null,
 			minDate: null,
 			changeYear: false
 		});
-		$scope.calendar.show();
+		$scope.fromCalendar.show();
+	};
+
+	$scope.toClick = function(){
+		$scope.toCalendar.resetConfg({
+			clickDateFlag: false,
+			clickDateHide: false
+		});
+		$scope.toCalendar.show();
 	};
 
 }];

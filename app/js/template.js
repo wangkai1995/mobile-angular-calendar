@@ -53,9 +53,7 @@ module.run(['$templateCache', function($templateCache) {
     '				<div class="footer-button" ng-click="template.determine()"><span>确定</span></div>\n' +
     '			</div>\n' +
     '		 </div>\n' +
-    '\n' +
     '	</div>\n' +
-    '\n' +
     '</div>\n' +
     '');
 }]);
@@ -117,9 +115,8 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '	<div class="footer">\n' +
     '		<ul>\n' +
-    '			<li ng-click="testClick()">首页</li>\n' +
-    '			<li>订单</li>\n' +
-    '			<li>我的</li>\n' +
+    '			<li ng-click="fromClick()">calendar方法-出发日期</li>\n' +
+    '			<li ng-click="toClick()">calendar方法-返程日期</li>\n' +
     '		</ul>\n' +
     '	</div>\n' +
     '</div>');

@@ -4,7 +4,7 @@ angular.module('app',[
 	'home',
 	'ui.router',
 	'directives',
-	'wk-calendar',
+	'mobile-calendar',
 	'template',
 	'calendar-template'
 ])
