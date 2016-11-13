@@ -6,7 +6,7 @@
 
 
 ##关于控件
-####目前由于是第一个版本，暂时未打包成 `npm module` JS以及html模板打包在calendar-template.js中，压缩过的版本在.min.js中，目前依赖的CSS由于比较小，并且马上会更新自定义的HTML模板 所有暂时未压缩CSS文件，依赖的CSS文件在com.calendar.css中
+####目前由于是第一个版本，暂时未打包成 `npm module` JS以及html模板打包在calendar-template.js中，压缩过的版本在.min.js中，目前依赖的CSS由于比较小，并且支持用户自定义HTML模板 所以暂时未压缩CSS文件，依赖的CSS文件在com.calendar.css中 如果需要使用默认HTML模板则必须加载这个CSS
 ####DEMO目前需要下载全部文件`npm i`加载依赖工具使用gulp运行
 
 ##使用以及配置
@@ -33,9 +33,16 @@
 		maxDate: new Date(2016,10,5),    `请注意月份是0-11算起`
 		minDate: new Date(2016,9,10),
 
+		// template: 'lib/calendar/test_index.html',  
+		***	
+		    自定义的html模板 只支持字符串格式
+			  自定义模板有两种方式 
+			  在下面单独说明
+		***
+
 		onBackObj: function(obj){
 			console.log(obj);        
-			$scope.calendar = obj;    `这个回调返回calendar实例`
+			$scope.fromCalendar = obj;    `这个回调返回calendar实例`
 		},
 		onChangeDate:function(date){
 			console.log(date);
@@ -50,6 +57,7 @@
 
 		onBackObj: function(obj){
 			console.log(obj);
+			$scope.toCalendar = obj;
 		},
 		onChangeDate:function(date){
 			console.log(date);
@@ -57,14 +65,22 @@
 	};
   
   //calendar实例方法使用
-  $scope.testClick = function(){
-		$scope.calendar.setDate(new Date(2016,9,15) , true);
-		$scope.calendar.resetConfg({
+  	$scope.fromClick = function(){
+		$scope.fromCalendar.setDate(new Date(2016,9,15) , true);
+		$scope.fromCalendar.resetConfg({
 			maxDate: null,
 			minDate: null,
 			changeYear: false
 		});
-		$scope.calendar.show();
+		$scope.fromCalendar.show();
+	};
+
+	$scope.toClick = function(){
+		$scope.toCalendar.resetConfg({
+			clickDateFlag: false,
+			clickDateHide: false
+		});
+		$scope.toCalendar.show();
 	};
   ```
   
@@ -79,7 +95,7 @@
     changeMonth:        `//月份是否可调 (boolean类型, 默认可调)`
     clickDateFlag:      `//点击元素是否立即改变 (boolean类型，默认true改变)`
     clickDateHide:      `//选择元素之后是否隐藏控件 (boolean类型，默认true关闭)`
-    }
+  }
  ```
  
 ##回调
@@ -97,7 +113,7 @@
     onClickDate:
     //日期改变回调 回传改变日期
     onChangeDate: 
-    }
+ }
  ```
  
  
@@ -106,5 +122,5 @@
  calendar.method.show();       `//显示控件`
  calendar.method.hide();       `//隐藏控件`
  calendar.method.setDate(date,outflag);    `//手动设置日期 (date = 设置的日期(Date) ;outflag = 是否输出到对应绑定的ng-module中(boolean))`
- calendar.method.resetConfg(confg);        `//重置配置 confg参数为上面配置对象calendar.confg一致`
+ calendar.method.resetConfg(confg);        `//重置配置 confg参数为上面配置对象calendar.confg一致 ***!特别注意HTML模板template属性不支持重定义***`
 ```
