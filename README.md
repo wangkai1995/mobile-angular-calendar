@@ -4,7 +4,7 @@
 ##简介
 ####这是一个应用在web app的calendar控件，基于angular.js编写，动画过渡效果依赖于css3。压缩过后目前只有9K大小,支持自定义HTML模板.
 
-###[Demo](http://qxu1606630086.my3w.com/).
+###[Demo](http://www.pzhwangkai.com/).
 
 ##关于控件
 ####目前由于是第一个版本，暂时未打包成 `npm module` JS以及html模板打包在calendar-template.js中，压缩过的版本在.min.js中，目前依赖的CSS由于比较小，并且支持用户自定义HTML模板 所以暂时未压缩CSS文件，依赖的CSS文件在com.calendar.css中 如果需要使用默认HTML模板则必须加载这个CSS
