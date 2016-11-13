@@ -53,9 +53,7 @@ module.run(['$templateCache', function($templateCache) {
     '				<div class="footer-button" ng-click="template.determine()"><span>确定</span></div>\n' +
     '			</div>\n' +
     '		 </div>\n' +
-    '\n' +
     '	</div>\n' +
-    '\n' +
     '</div>\n' +
     '');
 }]);
