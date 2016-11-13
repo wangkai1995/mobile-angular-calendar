@@ -35,16 +35,18 @@ module.exports = [ '$scope', '$state', function( $scope, $state){
 
 	$scope.calendar = '';
 
-	//控件参数配置
+	//控件参数配置  请注意月份是0-11算起
 	$scope.fromConfg = {
 		default : new Date(),
 		outFormat : 'yyyy年MM月dd日',
-		maxDate: new Date(2016,10,5),
+		maxDate: new Date(2016,10,5), 
 		minDate: new Date(2016,9,10),
+
+		// template: 'lib/calendar/test_index.html',
 
 		onBackObj: function(obj){
 			console.log(obj);
-			$scope.calendar = obj;
+			$scope.fromCalendar = obj;
 		},
 		onChangeDate:function(date){
 			console.log(date);
@@ -59,6 +61,7 @@ module.exports = [ '$scope', '$state', function( $scope, $state){
 
 		onBackObj: function(obj){
 			console.log(obj);
+			$scope.toCalendar = obj;
 		},
 		onChangeDate:function(date){
 			console.log(date);
@@ -67,14 +70,22 @@ module.exports = [ '$scope', '$state', function( $scope, $state){
 
 
 
-	$scope.testClick = function(){
-		$scope.calendar.setDate(new Date(2016,9,15) , true);
-		$scope.calendar.resetConfg({
+	$scope.fromClick = function(){
+		$scope.fromCalendar.setDate(new Date(2016,9,15) , true);
+		$scope.fromCalendar.resetConfg({
 			maxDate: null,
 			minDate: null,
 			changeYear: false
 		});
-		$scope.calendar.show();
+		$scope.fromCalendar.show();
+	};
+
+	$scope.toClick = function(){
+		$scope.toCalendar.resetConfg({
+			clickDateFlag: false,
+			clickDateHide: false
+		});
+		$scope.toCalendar.show();
 	};
 
 }];
@@ -109,7 +120,7 @@ angular.module('app',[
 	'home',
 	'ui.router',
 	'directives',
-	'wk-calendar',
+	'mobile-calendar',
 	'template',
 	'calendar-template'
 ])
@@ -206,9 +217,9 @@ module.run(['$templateCache', function($templateCache) {
 
 /*
  *
- * angular 1.X   calendar 0.0.0
+ * angular 1.X   calendar 0.0.0 
  *
- * 2016.10.23  china ShenZheng
+ * 2016.10.23  china ShenZheng 
  *
  * wangkai 
  *
@@ -220,7 +231,7 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
         restrict: 'EA',
         link: function(scope, element, attr) {
              
-     /****************    参数设置   ****************/
+    /****************    参数设置   ****************/
             //空函数
             var neep = function(){};
             //用来识别不同的calendar对象   
@@ -248,21 +259,26 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
             //设置参数
             calendar[module].confg = {
               //默认日期
-              default:  !angular.isUndefined(userConfg.default)? userConfg.default : new Date(),
+              default:  angular.isDefined(userConfg.default)? userConfg.default : new Date(),
               //最大日期
-              maxDate: !angular.isUndefined(userConfg.maxDate)? userConfg.maxDate : null,
+              maxDate: angular.isDefined(userConfg.maxDate)? userConfg.maxDate : null,
               //最小日期
-              minDate: !angular.isUndefined(userConfg.minDate)? userConfg.minDate : null,
+              minDate: angular.isDefined(userConfg.minDate)? userConfg.minDate : null,
               //输出格式化
-              outFormat : !angular.isUndefined(userConfg.outFormat)? userConfg.outFormat : 'yyyy-MM-dd',
+              outFormat : angular.isDefined(userConfg.outFormat)? userConfg.outFormat : 'yyyy-MM-dd',
               //年份是否可调 默认可调
-              changeYear: !angular.isUndefined(userConfg.changeYear)? userConfg.changeYear : true,
+              changeYear: angular.isDefined(userConfg.changeYear)? userConfg.changeYear : true,
               //月份是否可调 默认可调
-              changeMonth: !angular.isUndefined(userConfg.changeMonth )? userConfg.changeMonth : true,
+              changeMonth: angular.isDefined(userConfg.changeMonth )? userConfg.changeMonth : true,
               //点击元素是否立即改变 默认改变
-              clickDateFlag: !angular.isUndefined(userConfg.clickDateFlag)? userConfg.clickDateFlag : true,
+              clickDateFlag: angular.isDefined(userConfg.clickDateFlag)? userConfg.clickDateFlag : true,
               //选择元素之后是否关闭 默认关闭 
-              clickDateHide: !angular.isUndefined(userConfg.clickDateHide)? userConfg.clickDateHide : true
+              clickDateHide: angular.isDefined(userConfg.clickDateHide)? userConfg.clickDateHide : true,
+
+              //显示的html模板
+              //可以是$templateCache缓存 或者html字符串
+              template : angular.isDefined(userConfg.template)? $templateCache.get(userConfg.template)? $templateCache.get(userConfg.template) :
+                         userConfg.template : $templateCache.get('calendar/index.html')
             };
 
             //设置事件回调
@@ -293,7 +309,7 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
                 //年：月：日期数组
                 year : '',
                 month: '',
-                date : [],
+                date : []
             };
 
     /***********    对外提供的方法    ***************/
@@ -303,8 +319,8 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
             //显示模板
             calendar[module].method.show = function(){
                 module = this.flag;
-                initTemplateEvent();
                 templateShow(calendar[module].callback.onShow);
+                initTemplateEvent();
             };
 
             //关闭模板
@@ -333,19 +349,20 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
             //重置配置
             calendar[module].method.resetConfg = function(confg){
                module = this.flag;
-               calendar[module].confg.default = !angular.isUndefined(confg.default)? confg.default : calendar[module].confg.default;
-               calendar[module].confg.maxDate = !angular.isUndefined(confg.maxDate)? confg.maxDate : calendar[module].confg.maxDate;
-               calendar[module].confg.minDate = !angular.isUndefined(confg.minDate)? confg.minDate : calendar[module].confg.minDate;
-               calendar[module].confg.outFormat = !angular.isUndefined(confg.outFormat)? confg.outFormat : calendar[module].confg.outFormat;
-               calendar[module].confg.changeYear = !angular.isUndefined(confg.changeYear)? confg.changeYear : calendar[module].confg.changeYear;
-               calendar[module].confg.changeMonth = !angular.isUndefined(confg.changeMonth)? confg.changeMonth : calendar[module].confg.changeMonth;
-               calendar[module].clickDateFlag = !angular.isUndefined(confg.clickDateFlag)? confg.clickDateFlag : calendar[module].confg.clickDateFlag;
-               calendar[module].clickDateHide = !angular.isUndefined(confg.clickDateHide)? confg.clickDateHide : calendar[module].confg.clickDateHide;
+               calendar[module].confg.default = angular.isDefined(confg.default)? confg.default : calendar[module].confg.default;
+               calendar[module].confg.maxDate = angular.isDefined(confg.maxDate)? confg.maxDate : calendar[module].confg.maxDate;
+               calendar[module].confg.minDate = angular.isDefined(confg.minDate)? confg.minDate : calendar[module].confg.minDate;
+               calendar[module].confg.outFormat = angular.isDefined(confg.outFormat)? confg.outFormat : calendar[module].confg.outFormat;
+               calendar[module].confg.changeYear = angular.isDefined(confg.changeYear)? confg.changeYear : calendar[module].confg.changeYear;
+               calendar[module].confg.changeMonth = angular.isDefined(confg.changeMonth)? confg.changeMonth : calendar[module].confg.changeMonth;
+               calendar[module].confg.clickDateFlag = angular.isDefined(confg.clickDateFlag)? confg.clickDateFlag : calendar[module].confg.clickDateFlag;
+               calendar[module].confg.clickDateHide = angular.isDefined(confg.clickDateHide)? confg.clickDateHide : calendar[module].confg.clickDateHide;
                initDate();
                initTemplateEvent();
             };
 
-    /*************内部使用的一些函数*****************/
+    /*************   内部使用的一些函数   *****************/
+
 
               //判断是否是Date类型
               var validDate = function(obj){
@@ -532,7 +549,7 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
               //显示模板
               var templateShow = function(on_show){
                   //在BODY后面插入HTML
-                  var html = $compile($templateCache.get('calendar/index.html'))(scope);
+                  var html = $compile(calendar[module].confg.template)(scope);
                   $document.find('body').append(html);
                   //延迟一下显示 方便动态效果
                   $timeout(function(){
@@ -680,7 +697,7 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
                     scope.template.addYear = addYear;
                     scope.template.reduceYear = reduceYear;
                     scope.template.addMonth = addMonth;
-                    scope.template.reduceMonth = reduceMonth; 
+                    scope.template.reduceMonth = reduceMonth;
               };
 
               //初始化
@@ -704,15 +721,19 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
                   on_backobj(calendar[module].method);
               };
 
-    /*****************运行*****************/
+    /**************    运行     *************/
           
-          init(calendar[module].callback.onInit , calendar[module].callback.onBackObj);
+        init(calendar[module].callback.onInit , calendar[module].callback.onBackObj);
             
-        }
+      }
+
     };
+
 }];
+
+
 },{}],11:[function(require,module,exports){
- angular.module('wk-calendar', []) 
+ angular.module('mobile-calendar', []) 
  	.directive('calendar',require('./directive/index.js'));
  	
 },{"./directive/index.js":10}],12:[function(require,module,exports){
@@ -771,9 +792,7 @@ module.run(['$templateCache', function($templateCache) {
     '				<div class="footer-button" ng-click="template.determine()"><span>确定</span></div>\n' +
     '			</div>\n' +
     '		 </div>\n' +
-    '\n' +
     '	</div>\n' +
-    '\n' +
     '</div>\n' +
     '');
 }]);
@@ -835,9 +854,8 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '	<div class="footer">\n' +
     '		<ul>\n' +
-    '			<li ng-click="testClick()">首页</li>\n' +
-    '			<li>订单</li>\n' +
-    '			<li>我的</li>\n' +
+    '			<li ng-click="fromClick()">calendar方法-出发日期</li>\n' +
+    '			<li ng-click="toClick()">calendar方法-返程日期</li>\n' +
     '		</ul>\n' +
     '	</div>\n' +
     '</div>');
