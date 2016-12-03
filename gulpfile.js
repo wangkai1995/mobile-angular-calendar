@@ -62,12 +62,6 @@ gulp.task('htmlhint',function(){
 
 //编译js
 gulp.task('javascript',function(){
-	// gulp.src('app/js/**/*.js')
-	// .pipe(concat('all.js'))
-	// .pipe(gulp.dest('dist/js'))
-	// .pipe(rename({suffix : '.min'}))
-	// .pipe(uglify())
-	// .pipe(gulp.dest('dist/js'))
 	browserify({
         entries:['app/js/lib.js','app/js/index/index.js']
     })
@@ -83,11 +77,12 @@ gulp.task('javascript',function(){
 //编译插件JS
 gulp.task('calendar-js',function(){
 	gulp.src('app/js/lib/**/*.js')
+	.pipe(concat('calendar-template.js'))
 	.pipe(concat('calendar.js'))
 	.pipe(gulp.dest(''))
 	.pipe(rename({suffix : '.min'}))
 	.pipe(uglify())
-	.pipe(gulp.dest(''))
+	.pipe(gulp.dest(''));
 })
 
 //合并插件模块
@@ -98,6 +93,7 @@ gulp.task('calendar-bulid',function(){
             moduleName: 'calendar-template'
         }))
         .pipe(concat('calendar-template.js'))
+        .pipe(gulp.dest('app/js/lib'))
         .pipe(gulp.dest(''));
 })
 
@@ -120,11 +116,13 @@ gulp.task('dev',function(){
     });
 })
 
+
+
 //串起来批处理
 gulp.task('watch',function(){
 	gulp.start('sass', 'jshint', 'htmlhint', 'javascript','build-html','dev','calendar-js','calendar-bulid','calendar-sass');
-	gulp.watch(['app/js/**/*.html', 'app/js/common/**/*.html'],['build-html','calendar-bulid']);
+	gulp.watch(['app/js/**/*.html', 'app/js/common/**/*.html'],['build-html','calendar-bulid','calendar-js']);
 	gulp.watch('app/css/**/*.scss', ['sass','calendar-sass']);
-	gulp.watch('app/js/**/*.js', ['jshint', 'javascript','calendar-js']);
+	gulp.watch('app/js/**/*.js', ['jshint', 'javascript']);
 	gulp.watch('app/*.html', ['htmlhint']);
 })
