@@ -258,6 +258,8 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
             calendar[module].confg = {
               //默认日期
               default:  angular.isDefined(userConfg.default)? userConfg.default : new Date(),
+              //选中日期
+              check: angular.isDefined(userConfg.default)? userConfg.default : new Date(),
               //最大日期
               maxDate: angular.isDefined(userConfg.maxDate)? userConfg.maxDate : null,
               //最小日期
@@ -304,6 +306,7 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
                 templateShow : false,
                 //选中的元素
                 check: '',
+                checkActive : false,
                 //年：月：日期数组
                 year : '',
                 month: '',
@@ -333,6 +336,7 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
                 if( validDate(date) ){
                     if( validDateActive(date) ){
                         calendar[module].confg.default = date;
+                        calendar[module].confg.check = date;
                         scope.template.check = date;
                         calendar[module].callback.onChangeDate(date);
                         initDate();
@@ -448,6 +452,7 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
                 if(obj.active){
                     if(calendar[module].confg.clickDateFlag){
                         calendar[module].confg.default = obj.date;
+                        calendar[module].confg.check = obj.date;
                         calendar[module].check = obj.date;
                         outModule();
                         calendar[module].callback.onChangeDate(obj);
@@ -463,6 +468,7 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
               //确定按钮
               var determine = function(){
                   calendar[module].confg.default = scope.template.check;
+                  calendar[module].confg.check = scope.template.check;
                   outModule();
                   calendar[module].callback.onChangeDate(scope.template.check);
                     if(calendar[module].confg.clickDateHide){
@@ -637,7 +643,10 @@ module.exports = ['$window','$document','$timeout','$templateCache','$compile','
                     buff.date = new Date(year,month-1,i+1);
                     if(i+1 === now){
                       buff.now = true;
-                      scope.template.check = buff.date;
+                      //判断是否和选中日期相等
+                      if(calendar[module].confg.check.getTime() === buff.date.getTime()){
+                          scope.template.check = buff.date;
+                      }
                     }
                     //检测是否可用
                     buff.active =  validDateActive(buff.date);

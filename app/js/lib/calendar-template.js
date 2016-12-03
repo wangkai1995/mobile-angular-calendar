@@ -24,8 +24,8 @@ module.run(['$templateCache', function($templateCache) {
     '				 	<span class="green">{{template.month}}</span>\n' +
     '				 	<span ng-click="template.addMonth(1)">&nbsp;&gt;</span>\n' +
     '				</div>		\n' +
-    '			</div> 		\n' +
-    '		\n' +
+    '			</div> 		 \n' +
+    '\n' +
     '			<!--内容-->\n' +
     '			<div class="calendar-content">\n' +
     '				<div class="week-content">\n' +
@@ -45,7 +45,7 @@ module.run(['$templateCache', function($templateCache) {
     '					</span>\n' +
     '				</div>\n' +
     '			</div>\n' +
-    '			\n' +
+    '			    \n' +
     '			\n' +
     '			<!--底部-->\n' +
     '			<div class="calendar-footer">\n' +
@@ -53,9 +53,7 @@ module.run(['$templateCache', function($templateCache) {
     '				<div class="footer-button" ng-click="template.determine()"><span>确定</span></div>\n' +
     '			</div>\n' +
     '		 </div>\n' +
-    '\n' +
     '	</div>\n' +
-    '\n' +
     '</div>\n' +
     '');
 }]);
